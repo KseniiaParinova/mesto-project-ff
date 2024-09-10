@@ -3,21 +3,21 @@ import { openFullImage } from './modal.js';
 
 function createCard(item, deleteCard) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true); 
-  const delButton = cardElement.querySelector('.card__delete-button'); //забираем кнопку удаления для карточки
-  const cardImg = cardElement.querySelector('.card__image'); //забираем картинку карточки
-  cardImg.src = item.link; //добавляем ссылку в источник картинки для карточки
-  cardImg.alt = item.name; //добавляем alt для картинки
-  cardElement.querySelector('.card__title').textContent = item.name; //добавляем название карточки
-  delButton.addEventListener('click', () => {
-    deleteCard(delButton); //по клику выполняем функцию удаления с аргументом-кнопкой
+  const delButton = cardElement.querySelector('.card__delete-button'); 
+  const cardImg = cardElement.querySelector('.card__image'); 
+  cardImg.src = item.link; 
+  cardImg.alt = item.name; 
+  cardElement.querySelector('.card__title').textContent = item.name; 
+  delButton.addEventListener('click', function() {
+    deleteCard(delButton); 
   });
   cardElement.addEventListener('click', likeCard);
   cardElement.addEventListener('click', checkImage);
-  return cardElement; //возвращаем элемент карточки
+  return cardElement; 
 }
 
 function deleteCard(button) {
-    button.closest('.card').remove(); //удаляем ближайший к кнопке-аргументу элемент карточки
+    button.closest('.card').remove(); 
   }
   
   function likeCard(evt) {

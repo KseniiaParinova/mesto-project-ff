@@ -37,25 +37,25 @@ const nameCard = document.forms['new-place']['place-name'];
 const imageCard = document.forms['new-place'].link;
 
 function addCard(cardElement) {
-  cardsList.prepend(cardElement); //добавляем готовую карточку из переменной в DOM
+  cardsList.prepend(cardElement); 
 }
 
-initialCards.forEach((element) => {
-  const cardElement = createCard(element, deleteCard); //создаем карточку для каждого элемента из массива в cards.js, забирая из элементов имена и ссылки
-  addCard(cardElement); //добавляем созданные карточки на страницу
+initialCards.forEach(function(element) {
+  const cardElement = createCard(element, deleteCard); 
+  addCard(cardElement); 
 });
 
 addCardForm.addEventListener('submit', cardFormSubmit);
 
 editProfileForm.addEventListener('submit', profileFormSubmit);
 
-editProfileButton.addEventListener('click', () => {
+editProfileButton.addEventListener('click', function() {
   popupName.value = userName.textContent;
   popupSpec.value = userSpec.textContent;
   openPopup(popupEdit);
 });
 
-addCardButton.addEventListener('click', () => {
+addCardButton.addEventListener('click', function() {
   openPopup(popupAddCard);
 });
 
