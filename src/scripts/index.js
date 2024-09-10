@@ -8,32 +8,68 @@
 
 // @todo: Вывести карточки на страницу
 
-const cardTemplate = document.querySelector("#card-template").content;
-const cardList = document.querySelector(".places__list");
+import '../pages/index.css';
+import { initialCards } from './cards.js';
+import { createCard, deleteCard, likeCard, checkImage } from './card.js';
+import {
+  openPopup,
+  closePopup,
+  openFullImage,
+  profileFormSubmit,
+  cardFormSubmit,
+} from './modal.js';
 
-function createCard(item, deleteCard) {
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  const cardImg = cardElement.querySelector(".card__image");
-  cardImg.src = item.link;
-  cardImg.alt = item.name;
-  cardElement.querySelector(".card__title").textContent = item.name;
-  deleteButton.addEventListener("click", () => {
-    deleteCard(deleteButton);
-  });
-  return cardElement;
-}
+const cardsList = document.querySelector('.places__list'); //забираем список карточек из DOM
+const cardTemplate = document.querySelector('#card-template').content; //забираем шаблон карточки
+const editProfileButton = document.querySelector('.profile__edit-button');
+const addCardButton = document.querySelector('.profile__add-button');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupAddCard = document.querySelector('.popup_type_new-card');
+const popupImage = document.querySelector('.popup_type_image');
+const fullImage = document.querySelector('.popup__image');
+const userName = document.querySelector('.profile__title');
+const userSpec = document.querySelector('.profile__description');
+const editProfileForm = document.forms['edit-profile'];
+const addCardForm = document.forms['new-place'];
+const popupName = document.forms['edit-profile'].name;
+const popupSpec = document.forms['edit-profile'].description;
+const nameCard = document.forms['new-place']['place-name'];
+const imageCard = document.forms['new-place'].link;
 
 function addCard(cardElement) {
-  cardList.append(cardElement);
+  cardsList.prepend(cardElement); //добавляем готовую карточку из переменной в DOM
 }
 
-function deleteCard(button) {
-  button.closest(".card").remove();
-}
-
-initialCards.forEach(function (element) {
-  const cardElement = createCard(element, deleteCard);
-  addCard(cardElement);
+initialCards.forEach((element) => {
+  const cardElement = createCard(element, deleteCard); //создаем карточку для каждого элемента из массива в cards.js, забирая из элементов имена и ссылки
+  addCard(cardElement); //добавляем созданные карточки на страницу
 });
 
+addCardForm.addEventListener('submit', cardFormSubmit);
+
+editProfileForm.addEventListener('submit', profileFormSubmit);
+
+editProfileButton.addEventListener('click', () => {
+  popupName.value = userName.textContent;
+  popupSpec.value = userSpec.textContent;
+  openPopup(popupEdit);
+});
+
+addCardButton.addEventListener('click', () => {
+  openPopup(popupAddCard);
+});
+
+export {
+  fullImage,
+  userName,
+  userSpec,
+  nameCard,
+  imageCard,
+  popupImage,
+  popupAddCard,
+  popupEdit,
+  cardTemplate,
+  popupName,
+  popupSpec,
+  addCard,
+};
