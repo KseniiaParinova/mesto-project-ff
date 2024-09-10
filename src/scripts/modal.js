@@ -1,81 +1,37 @@
-import {
-  fullImage,
-  userName,
-  userSpec,
-  nameCard,
-  imageCard,
-  addCard,
-  popupImage,
-  popupAddCard,
-  popupEdit,
-  popupName,
-  popupSpec,
-} from './index.js';
-import { createCard, deleteCard } from './card.js';
-
 function openPopup(popup) {
   popup.classList.add('popup_is-opened');  
-  document.addEventListener('keydown', function(evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
-  popup.addEventListener('click', function(evt) {
-    if (evt.currentTarget === evt.target) {
-      closePopup(popup);
-    } else if (evt.target === evt.target.closest('.popup__close')) {
-      closePopup(popup);
-    }
-  });
+  document.addEventListener('keydown', closePopupEscape);
 }
 
 function closePopup(popup) {
-  popup.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', function(evt) {
-    if (evt.key === 'Escape') {
-      closePopup(popup);
-    }
-  });
-  popup.removeEventListener('click', function (evt) {
-    if (evt.currentTarget === evt.target) {
-      closePopup(popup);
-    } else if (evt.target === evt.target.closest('.popup__close')) {
-      closePopup(popup);
-    }
-  });
+  popup.classList.remove('popup_is-opened'); 
+  document.removeEventListener('keydown', closePopupEscape); 
 }
 
-function openFullImage(target) {
-  openPopup(popupImage);
-  fullImage.src = target.closest('.card__image').src;
-  fullImage.alt = target.closest('.card__image').alt;
-  document.querySelector('.popup__caption').textContent = target.closest('.card__image').alt;
-}
+function closePopupEscape(evt) {
+  if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_is-opened');
+    closePopup(popup); 
+  }
+};
 
-function profileFormSubmit(evt) {
-  evt.preventDefault();
-  userName.textContent = popupName.value;
-  userSpec.textContent = popupSpec.value;
-  closePopup(popupEdit);
-}
+function closePopupButton(evt) {
+  if (evt.target === evt.target.closest('.popup__close')) {
+    const popup = document.querySelector('.popup_is-opened');
+    closePopup(popup); 
+  }
+};
 
-function cardFormSubmit(evt) {
-  evt.preventDefault();
-  const item = {};
-  item.name = nameCard.value;
-  item.link = imageCard.value;
-  const cardElement = createCard(item, deleteCard);
-  addCard(cardElement);
-  nameCard.value = '';
-  imageCard.value = '';
-  closePopup(popupAddCard);
-  return cardElement;
-}
+function closePopupOverlay(evt) {
+  const popup = document.querySelector('.popup_is-opened');
+  if (popup === evt.target) {    
+    closePopup(popup); 
+  }};
 
 export {
   openPopup,
   closePopup,
-  openFullImage,
-  profileFormSubmit,
-  cardFormSubmit,
-};
+  closePopupEscape,
+  closePopupButton,
+  closePopupOverlay
+}; 
