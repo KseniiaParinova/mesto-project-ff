@@ -31,7 +31,6 @@ function closePopupOverlay(evt) {
 export {
   openPopup,
   closePopup,
-  closePopupEscape,
   closePopupButton,
   closePopupOverlay
 };
