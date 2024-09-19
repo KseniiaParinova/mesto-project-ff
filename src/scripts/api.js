@@ -14,7 +14,7 @@ function checkResponse(res) {
 }
 
 function request(url, options) {
-  // принимает два аргумента: урл и объект опций, как и `fetch`
+  // принимает два аргумента: урлk и объект опций, как и `fetch`
   return fetch(url, options).then(checkResponse);
 }
 
