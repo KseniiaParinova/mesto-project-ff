@@ -2,8 +2,7 @@ import {deleteCardsOnServer,
   addToLikesArray, 
   deleteToLikesArray} from './api.js';
 
-//создание карточки
-export function createCard(element, deleteCard, liking, openPopupCards, currentUserId) {
+ function createCard(element, deleteCard, liking, openPopupCards, currentUserId) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
@@ -32,7 +31,7 @@ export function createCard(element, deleteCard, liking, openPopupCards, currentU
   return cardElement;
 };
 
-export function liking(button, cardId, currentUser, numberLike) {
+function liking(button, cardId, currentUser, numberLike) {
   if (button.classList.contains('card__like-button_is-active')) {
       deleteToLikesArray(cardId)
      .then((data) => {
@@ -57,7 +56,6 @@ export function liking(button, cardId, currentUser, numberLike) {
   }
 };
 
-// проверка наличия лайка текущего пользователя
 function updateLikeButtonState(likes, currentUser, button) {
   if (likes.some(user => user._id === currentUser)) {
       button.classList.add('card__like-button_is-active');
@@ -66,8 +64,7 @@ function updateLikeButtonState(likes, currentUser, button) {
   }
 };
 
-//функция удаления карточки
-export function deleteCard(cardElement, cardId) {
+function deleteCard(cardElement, cardId) {
   deleteCardsOnServer(cardId)
   .then(() => {
       cardElement.remove();
@@ -75,4 +72,10 @@ export function deleteCard(cardElement, cardId) {
   .catch((error) => {
       console.error('Ошибка при удалении карточки:', error);
   });
+};
+
+export {
+  createCard,
+  liking,
+  deleteCard
 };

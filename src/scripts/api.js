@@ -13,8 +13,7 @@ const checkAnswer = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-//загрузка информации о пользователе 
-export function getUserInfo() {
+function getUserInfo() {
   return fetch(`${config.baseUrl}/users/me`, {
       method: 'GET',
       headers: config.headers
@@ -22,8 +21,7 @@ export function getUserInfo() {
   .then(checkAnswer)
 }; 
 
-//загрузка новых данных о пользователе на сервер
-export function changeUser(name, about) {
+function changeUser(name, about) {
   return fetch(`${config.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: config.headers,
@@ -35,8 +33,7 @@ export function changeUser(name, about) {
   .then(checkAnswer)
 };
 
-//загрузка аватара
-export function getUserAvatar(avatar) {
+function getUserAvatar(avatar) {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: config.headers,
@@ -47,8 +44,7 @@ export function getUserAvatar(avatar) {
   .then(checkAnswer)
 }; 
 
-//загрузка массива карточек на страницу
-export function getArrayOfCards() {
+function getArrayOfCards() {
   return fetch(`${config.baseUrl}/cards`, {
       method: 'GET',
       headers: config.headers
@@ -56,8 +52,7 @@ export function getArrayOfCards() {
   .then(checkAnswer)
 };
 
-//загрузка на сервер новой карточки 
-export function addCardToServer(name, link) {
+function addCardToServer(name, link) {
   return fetch(`${config.baseUrl}/cards`, {
       method: 'POST',
       headers: config.headers,
@@ -69,8 +64,7 @@ export function addCardToServer(name, link) {
   .then(checkAnswer)
 }; 
 
-//удаление карточек с сервера
-export function deleteCardsOnServer(cardId) {
+function deleteCardsOnServer(cardId) {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: config.headers,
@@ -78,20 +72,29 @@ export function deleteCardsOnServer(cardId) {
   .then(checkAnswer)
 }; 
 
-//добавления лайка карточке
-export function addToLikesArray(cardId) {
+function addToLikesArray(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: config.headers
       })
       .then(checkAnswer)
-}; 
+}; //доб. лайка 
 
-//удаление лайка у карточки
-export function deleteToLikesArray(cardId) {
+function deleteToLikesArray(cardId) {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: config.headers
       })
       .then(checkAnswer)
-}; 
+}; //удаление лайка 
+
+export {
+  getUserInfo,
+  getUserAvatar,
+  changeUser,
+  getArrayOfCards,
+  addCardToServer,
+  deleteCardsOnServer,
+  addToLikesArray,
+  deleteToLikesArray
+};
