@@ -11,12 +11,16 @@
   border-radius: 2px;
   border: none;
   transition: visibility 0s, background 0.3s;
-  margin-top: 20px;
+  margin-top: 48px;
 }
 
 .popup__button:hover {
   background: rgba(0, 0, 0, 0.8);
   cursor: pointer;
+}
+
+.popup_editing_avatars .popup__button {
+  margin-top: 14px;
 }
 
 @media screen and (max-width: 568px) {

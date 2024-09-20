@@ -3,21 +3,14 @@
 @import url('./__close/popup__close.css');
 @import url('./__title/popup__title.css');
 @import url('./__form/popup__form.css');
-@import url('./__formfield/popup__formfield.css');
 @import url('./__input/popup__input.css');
-@import url('./__input/_type/popup__input_type_error.css');
-@import url('./__input/_error/popup__input-error.css');
-@import url('./__input/_error/popup__input-error_active.css');
 @import url('./__button/popup__button.css');
-@import url('./__button/_isunactive/popup__button-isunactive.css');
 @import url('./__caption/popup__caption.css');
 @import url('./__image/popup__image.css');
 
 .popup {
   font-family: 'Inter', Arial, sans-serif;
   display: none;
-  visibility: hidden;
-  opacity: 0;
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, .5);
@@ -27,4 +20,30 @@
   bottom: 0;
   right: 0;
   z-index: 10;
+}
+
+.popup__input {
+  outline: none;
+}
+
+.popup__button_disabled {
+  opacity: 0.2;
+}
+
+.popup__input_type_error {
+  border-bottom-color: rgba(255, 0, 0, 1);
+}
+
+.input {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  color: rgba(255, 0, 0, 0);
+  display: block;
+  height: 34px;
+}
+
+.popup__error_visible {
+  color: rgba(255, 0, 0, 1);
 }

@@ -6,90 +6,92 @@ const config = {
   },
 };
 
-function checkResponse(res) {
+const checkAnswer = (res) => {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка ${res.status}`);
-}
-
-function request(url, options) {
-  // принимает два аргумента: урлk и объект опций, как и `fetch`
-  return fetch(url, options).then(checkResponse);
-}
-
-function getServerProfile() {
-  return request(config['baseUrl'] + '/users/me', {
-    headers: config['headers'],
-  });
-}
-
-function getServerCards() {
-  return request(config['baseUrl'] + '/cards', {
-    headers: config['headers'],
-  });
-}
-
-function patchServerProfile(inputNameFormProfile, inputDescriptionFormProfile) {
-  return request(config['baseUrl'] + '/users/me', {
-    method: 'PATCH',
-    headers: config['headers'],
-    body: JSON.stringify({
-      name: inputNameFormProfile.value,
-      about: inputDescriptionFormProfile.value,
-    }),
-  });
-}
-
-function postServerCard(item) {
-  return request(config['baseUrl'] + '/cards', {
-    method: 'POST',
-    headers: config['headers'],
-    body: JSON.stringify({
-      name: item.name,
-      link: item.link,
-    }),
-  });
-}
-
-function deleteServerCard(item) {
-  return request(config['baseUrl'] + '/cards/' + item['_id'], {
-    method: 'DELETE',
-    headers: config['headers'],
-  });
-}
-
-function putServerLike(item) {
-  return request(config['baseUrl'] + '/cards/likes/' + item['_id'], {
-    method: 'PUT',
-    headers: config['headers'],
-  });
-}
-
-function deleteServerLike(item) {
-  return request(config['baseUrl'] + '/cards/likes/' + item['_id'], {
-    method: 'DELETE',
-    headers: config['headers'],
-  });
-}
-
-function patchServerAvatar(link) {
-  return request(config['baseUrl'] + '/users/me/avatar', {
-    method: 'PATCH',
-    headers: config['headers'],
-    body: JSON.stringify({
-      avatar: link,
-    }),
-  });
-}
-
-export {
-  getServerProfile,
-  getServerCards,
-  patchServerProfile,
-  postServerCard,
-  deleteServerCard,
-  putServerLike,
-  deleteServerLike,
-  patchServerAvatar,
+  return Promise.reject(`Ошибка: ${res.status}`);
 };
+
+//загрузка информации о пользователе 
+export function getUserInfo() {
+  return fetch(`${config.baseUrl}/users/me`, {
+      method: 'GET',
+      headers: config.headers
+  })
+  .then(checkAnswer)
+}; 
+
+//загрузка новых данных о пользователе на сервер
+export function changeUser(name, about) {
+  return fetch(`${config.baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: config.headers,
+      body: JSON.stringify({
+          name: name,
+          about: about
+      })
+  })
+  .then(checkAnswer)
+};
+
+//загрузка аватара
+export function getUserAvatar(avatar) {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: config.headers,
+      body: JSON.stringify({
+          avatar: avatar
+      })
+  })
+  .then(checkAnswer)
+}; 
+
+//загрузка массива карточек на страницу
+export function getArrayOfCards() {
+  return fetch(`${config.baseUrl}/cards`, {
+      method: 'GET',
+      headers: config.headers
+  })
+  .then(checkAnswer)
+};
+
+//загрузка на сервер новой карточки 
+export function addCardToServer(name, link) {
+  return fetch(`${config.baseUrl}/cards`, {
+      method: 'POST',
+      headers: config.headers,
+      body: JSON.stringify({
+          name: name,
+          link: link,
+      })
+  })
+  .then(checkAnswer)
+}; 
+
+//удаление карточек с сервера
+export function deleteCardsOnServer(cardId) {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: config.headers,
+  })
+  .then(checkAnswer)
+}; 
+
+//добавления лайка карточке
+export function addToLikesArray(cardId) {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: config.headers
+      })
+      .then(checkAnswer)
+}; 
+
+//удаление лайка у карточки
+export function deleteToLikesArray(cardId) {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: config.headers
+      })
+      .then(checkAnswer)
+}; 

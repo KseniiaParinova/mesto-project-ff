@@ -17,3 +17,7 @@
     padding: 30px 20px;
   }
 }
+
+.popup_editing_avatars .popup__content {
+  min-height: 275px;
+}

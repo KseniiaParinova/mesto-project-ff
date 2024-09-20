@@ -1,18 +1,29 @@
-function openPopup(popup) {
-  popup.classList.add('popup_is-opened'); 
-  document.addEventListener('keydown', closePopupEscape); 
-}
+//открытие модального окна
+export function openModal(elem) {
+  elem.classList.add('popup_is-opened');
+  elem.addEventListener('click', closeByOverlay);
+  document.addEventListener('keydown', closeModalEscape);
+};
 
-function closePopup(popup) {
-  popup.classList.remove('popup_is-opened'); 
-  document.removeEventListener('keydown', closePopupEscape); 
-}
+//закрытие модального окна
+export function closeModal(elem) {
+elem.classList.remove('popup_is-opened');
+elem.removeEventListener('click', closeByOverlay);
+document.removeEventListener('keydown', closeModalEscape);
+};
 
-function closePopupEscape(evt) {
+//закрытие по Esc
+function closeModalEscape(evt) {
+  const activePopup = document.querySelector('.popup_is-opened');
   if (evt.key === 'Escape') {
-    const popup = document.querySelector('.popup_is-opened'); 
-    closePopup(popup); 
+      closeModal(activePopup);
   }
-}
+};
 
-export { openPopup, closePopup, closePopupEscape }; 
+//закрытие по оверлею
+function closeByOverlay (evt) {
+  const activePopup = document.querySelector('.popup_is-opened');
+  if (evt.target === evt.currentTarget) {
+      closeModal(activePopup);
+  }
+};
